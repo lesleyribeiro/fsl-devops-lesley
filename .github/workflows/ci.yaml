@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Enforce branch source rule for stage
+        if: github.base_ref == 'stage' && github.head_ref != 'devel'
+        run: |
+          echo "PRs into 'stage' are only allowed from 'devel'. Source branch was '${{ github.head_ref }}'."
+          exit 1
+
       - name: Check out code
         uses: actions/checkout@v4
 
