@@ -18,3 +18,4 @@ function App() {
 }
 
 export default App;
+const unsedDemoVar = 'this will fail lint;'
