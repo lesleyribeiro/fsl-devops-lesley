@@ -18,3 +18,4 @@ function App() {
 }
 
 export default App;
+const unuseddemoVar = 'this will fail;'
