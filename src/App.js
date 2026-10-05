@@ -18,4 +18,3 @@ function App() {
 }
 
 export default App;
-const unusedDemoVar = 'This will fail lint;'
