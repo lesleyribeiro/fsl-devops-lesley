@@ -89,6 +89,13 @@ resource "aws_cloudfront_origin_access_control" "site" {
 }
 
 resource "aws_cloudfront_distribution" "site" {
+  # Explicit dependency: CloudFront validates that the logging destination
+  # bucket has ACLs enabled (log-delivery-write) at creation time. Without
+  # this, Terraform may create the distribution in parallel with the ACL
+  # resource, racing against S3's ACL/ownership-controls propagation and
+  # causing "AccessDenied" / "does not enable ACL access" errors.
+  depends_on = [aws_s3_bucket_acl.logs]
+
   enabled             = true
   default_root_object = "index.html"
   comment             = "${local.name_prefix} static site distribution"
